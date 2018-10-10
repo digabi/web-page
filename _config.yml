@@ -1,6 +1,5 @@
 # Site settings
-title: Kisallioppiminen.fi
-backendbaseurl: "https://kisallioppiminen.github.io/"
+title: Digabi
 
 # Build settings
 markdown: kramdown
@@ -12,20 +11,14 @@ sass:
   style: :compressed
 
 navigation:
-  "Materiaalit": "/"
-  "Blogi": "http://blogs.helsinki.fi/kisallioppiminenlukiossa"
-  "Tietoa": "/tietoa.html"
-  "BETA": "https://beta-kisallioppiminen.github.io"
-  # Login button added with js
-
+  
 resources:
   css:
     - "/css/bootstrap.css"
     - "/css/custom.css"
     - "//fonts.googleapis.com/css?family=Alegreya+Sans:400|Noto+Sans:400,700|Open+Sans+Condensed:300,700"
     - "/css/main.css"
-   #- "/css/definitions_page.css"
-
+  
   js:
     # Download libraries
     - "//code.jquery.com/jquery-2.2.4.min.js"
@@ -38,7 +31,6 @@ resources:
     - "/js/view.js"
     - "/js/scheduleManager.js"
     - "/js/exercises.js"
-    - "/js/backend.js"
     - "/js/jquery-ui.js"
     - "/js/mooc.js"
     - "/js/button/button.js"
