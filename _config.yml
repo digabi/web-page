@@ -26,7 +26,6 @@ resources:
     - "//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
 
     # Download own scripts
-    - "/js/common.js"
     - "/js/jquery-ui.js"
     - "/js/mooc.js"
 
