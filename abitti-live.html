@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Digabi</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://www.ylioppilastutkinto.fi/themes/custom/ytl/favicon.ico">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="https://www.ylioppilastutkinto.fi/themes/custom/ytl/favicon.ico" color="#C4DA87">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="Digabi" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Digabi is an open-source codebase used in the Abitti exam system." />
+  <meta property="og:url" content="https://digabi.fi" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image" content="https://www.ylioppilastutkinto.fi/themes/custom/ytl/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <link rel="stylesheet" type="text/css" href="css/face.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+
+<div class="color-band"></div>
+
+<main>
+
+  <section>
+    <div class="section-title-space">
+      <a href="https://digabi.fi">
+        <img src="images/digabi-logo.png" alt="Digabi" style="max-width: 180px;"/>
+      </a>
+    </div>
+</section>
+      <section>
+        <div class="section-title-space h2"></div>
+        <div class="body">
+          <h1 class="no-bottom-margin">Working With Abitti Live</h1>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title-space h2 blue"></div>
+        <div class="body">
+          The heart of Abitti is the live image based on Debian GNU/Linux. We have to images: one for a server and
+          another for the test taker. If you are developing package for the server's or the test taker's image
+          read on!
+        </div>
+      </section>
+      <section>
+        <div class="section-title-space h2 blue"></div>
+        <div class="body">
+          Our build process expects you to ship your product as a <kbd>.deb</kbd> file. When we get your production-ready <kbd>.deb</kbd>
+          we put it to our CI and instruct our build process to install this package (i.e. <kbd>dpkg -i ...deb</kbd>).
+          Before shipping your shiny <kbd>.deb</kbd> to us to might want to test it in the real production/testing environment.
+        </div>
+      </section>
+      <section>
+        <div class="section-title-space h2 blue">Installing Your Package to the Server Live</div>
+        <div class="body">
+          To work with the server you need the root password. To get one, just put on your
+          yellow vest and ask the password from our janitor. If you're working remotely,
+          please contact us by email.
+          <br /><br />
+
+          <ol>
+            <li>Boot a laptop with the server image</li>
+            <li>Click on the top of the screen where you see an open terminal session called "verkko/nätet"</li>
+            <li>Right-click on the terminal window and select "Avaa välilehti" (open a tab)</li>
+            <li><kbd>su -</kbd></li>
+            <li>Enter the <kbd>root</kbd> password</li>
+          </ol>
+
+          <br />
+
+          Now let's profit:
+          <br /><br />
+
+          <ol>
+            <li>Insert your FAT-formatted USB stick which holds your diamond <kbd>.deb</kbd>.</li>
+            <li><kbd>lsblk</kbd></li>
+            <li>
+              Your USB-stick is typically <kbd>sdb</kbd> or <kbd>sdc</kbd> depending the mass drive of the laptop. Start checking the
+              last entry on the list.
+            </li>
+            <li><kbd>mount /dev/sdc1 /mnt   # or /dev/sdc1...</kbd></li>
+            <li><kbd>cd /mnt</kbd></li>
+            <li><kbd>dpkg -i yourpackage.deb</kbd></li>
+          </ol>
+        </div>
+      </section>
+      <section>
+        <div class="section-title-space h2 blue">Installing Your Package to the Test Taker's Live</div>
+        <div class="body">
+          To get anything done in the test taker's image you need the root password. It is sooo easy to get
+          it, just check the instructions above.
+          <br /><br />
+
+          <ol>
+            <li>Hit Ctrl-Alt-F1 to get to the text console</li>
+            <li>Log in as <kbd>root</kbd> and enter the password.</li>
+          </ol>
+          <br/>
+
+          There are two ways you can import files to the live:
+          <ul>
+            <li>Mount an USB stick by following exactly the same procedure as above.</li>
+            <li>Place the files to the server (<kbd>/usr/local/share/map-tiles/tiles/filename</kbd>) and fetch them at <kbd>http://localhost/tiles/filename</kbd></li>
+          </ul>
+          <br/>
+
+          To get back to the X session (GUI) press Ctrl-Alt-F7.
+          <br/>
+        </div>
+      </section>
+      <section>
+        <div class="section-title-space h2 blue">Reverting Back to Normal</div>
+        <div class="body">
+          Don't forget you're working on a live image. All the changes you make to the filesystem are just in the
+          RAM. When you want to revert to the original state just power off your laptop and boot again.
+        </div>
+      </section>
+
+    </main>
+
+  </body>
+
+</html>
