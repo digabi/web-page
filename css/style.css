@@ -285,7 +285,7 @@ button:focus {
     left: 0;
     width: calc((100% - 944px) / 2 + 308px);
     height: 16px;
-    background-color: #C4DA87;
+    background-color: #002c77;
     content: "";
 }
 
