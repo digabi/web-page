@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Digabi</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://www.ylioppilastutkinto.fi/themes/custom/ytl/favicon.ico">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="https://www.ylioppilastutkinto.fi/themes/custom/ytl/favicon.ico" color="#C4DA87">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="Digabi" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Digabi is an open-source codebase used in the Abitti exam system." />
+  <meta property="og:url" content="https://digabi.fi" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image" content="https://www.ylioppilastutkinto.fi/themes/custom/ytl/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <link rel="stylesheet" type="text/css" href="css/face.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+
+<div class="color-band"></div>
+
+<main>
+
+  <section>
+    <div class="section-title-space">
+      <a href="https://digabi.fi">
+        <img src="images/digabi-logo.png" alt="Digabi" style="max-width: 180px;"/>
+      </a>
+    </div>
+</section>
+
+      <section>
+        <div class="section-title-space h2"></div>
+        <div class="body">
+          <h1 class="no-bottom-margin">Digabi 2 Application Specification</h1>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title-space h2 blue"></div>
+        <div class="body">
+          <p>
+            The next generation Abitti 2 to be used in Matriculation Examination tests from autumn 2026 onwards is based on an installable 
+            kiosk-mode browser application, and HTML5 based third-party applications storing files to a test-time cloud storage. The third-party applications, such as calculators or office suite, runs in 
+            their own Docker containers.
+          </p>
+          <p>Contact us before you start
+            working on your third-party application!
+          </p>
+          <p>
+            The apps will be run in an iframe in the Digabi 2 exam system, and
+            they will be able to access the test's files via WebDAV. The apps
+            should not use any technology that interferes with the iframe, for
+            example referring to window.top.
+          </p>
+          <p>
+            Want to read the code instead of spec? Take a look at
+            <a href="https://github.com/digabi/digabi2-drawio"
+              >the example implementation with Draw.io</a
+            >.
+          </p>
+          <p>
+            <b>
+              note: At the moment this documentation may change since we're
+              taking the baby steps with the architecture.
+            </b>
+          </p>
+        </div>
+      </section>
+      <section>
+        <div class="section-title-space h2 blue">Application Entry Point</div>
+        <div class="body">
+          <h2>GET /</h2>
+          <p>
+            This is the main entry point to the app called by the Digabi 2 exam
+            system when the application is started. The app server MAY serve
+            additional assets only under this path.
+          </p>
+          <p>
+            If the app supports files, it will be launched with the
+            <kbd>filename</kbd> query parameter. A client-side script MUST first
+            check the file's existence with a WebDAV PROPFIND request, and load
+            the app with its contents if it exists. Otherwise the app SHOULD
+            present a new, blank file to the user.
+          </p>
+          <p>
+            The app MUST use the path <kbd>/wd/{filename}</kbd> to access the
+            file.
+          </p>
+          <pre><code class="language-js">const url = `/wd/${encodeURIComponent(filename)}`
+const result = await fetch(url, { method: "PROPFIND" })
+switch (result.status) {
+    case 207: {
+        // The file exists; open the app with its contents.
+        return startApp(await fetch(url).then(response => response.blob()))
+    }
+    case 404: {
+        // No such file; it will be created when first saved.
+        return startApp(new File())
+    }
+    default: {
+        // An error happened; do not start the app.
+        return
+    }
+}</code></pre>
+          <p>
+            The app MAY automatically save the file, or when prompted by the
+            user, via a PUT request with the new contents to the same URL.
+          </p>
+          <pre><code class="language-js">const url = `/wd/${encodeURIComponent(filename)}`
+await fetch(url, { method: "PUT", body: file })</code></pre>
+          <p>
+            Session cookies determine the exam and student whose files are being
+            used, but the app MUST NOT make any use or assumptions of such
+            cookies.
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
