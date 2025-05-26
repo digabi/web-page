@@ -238,6 +238,13 @@ button:focus {
     color: #006ed2;
 }
 
+.dotted {
+    margin-bottom: 25px;
+    font-size: 2.5em;
+    border-bottom: dotted 3px;
+    color: #002c77;
+}
+
 .header-smiley {
     width: 320px;
     font-size: 4rem;
